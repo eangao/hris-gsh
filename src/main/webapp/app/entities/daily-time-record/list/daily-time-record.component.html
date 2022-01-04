@@ -1,0 +1,126 @@
+<div>
+  <h2 id="page-heading" data-cy="DailyTimeRecordHeading">
+    <span jhiTranslate="hrisGshApp.dailyTimeRecord.home.title">Daily Time Records</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="hrisGshApp.dailyTimeRecord.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-daily-time-record"
+        [routerLink]="['/daily-time-record/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="hrisGshApp.dailyTimeRecord.home.createLabel"> Create a new Daily Time Record </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="dailyTimeRecords?.length === 0">
+    <span jhiTranslate="hrisGshApp.dailyTimeRecord.home.notFound">No dailyTimeRecords found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="dailyTimeRecords && dailyTimeRecords.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="employeeBiometricId">
+            <span jhiTranslate="hrisGshApp.dailyTimeRecord.employeeBiometricId">Employee Biometric Id</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="inputType">
+            <span jhiTranslate="hrisGshApp.dailyTimeRecord.inputType">Input Type</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="attendanceType">
+            <span jhiTranslate="hrisGshApp.dailyTimeRecord.attendanceType">Attendance Type</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="temperature">
+            <span jhiTranslate="hrisGshApp.dailyTimeRecord.temperature">Temperature</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="logDate">
+            <span jhiTranslate="hrisGshApp.dailyTimeRecord.logDate">Log Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="logTime">
+            <span jhiTranslate="hrisGshApp.dailyTimeRecord.logTime">Log Time</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="employee.employeeBiometricId">
+            <span jhiTranslate="hrisGshApp.dailyTimeRecord.employee">Employee</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dailyTimeRecord of dailyTimeRecords; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/daily-time-record', dailyTimeRecord.id, 'view']">{{ dailyTimeRecord.id }}</a>
+          </td>
+          <td>{{ dailyTimeRecord.employeeBiometricId }}</td>
+          <td>{{ dailyTimeRecord.inputType }}</td>
+          <td>{{ dailyTimeRecord.attendanceType }}</td>
+          <td>{{ dailyTimeRecord.temperature }}</td>
+          <td>{{ dailyTimeRecord.logDate }}</td>
+          <td>{{ dailyTimeRecord.logTime }}</td>
+          <td>
+            <div *ngIf="dailyTimeRecord.employee">
+              <a [routerLink]="['/employee', dailyTimeRecord.employee?.id, 'view']">{{ dailyTimeRecord.employee?.employeeBiometricId }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/daily-time-record', dailyTimeRecord.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/daily-time-record', dailyTimeRecord.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(dailyTimeRecord)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="dailyTimeRecords && dailyTimeRecords.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

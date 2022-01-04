@@ -1,0 +1,46 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="trainingHistory">
+      <h2 data-cy="trainingHistoryDetailsHeading"><span jhiTranslate="hrisGshApp.trainingHistory.detail.title">Training History</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ trainingHistory.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.trainingHistory.name">Name</span></dt>
+        <dd>
+          <span>{{ trainingHistory.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.trainingHistory.date">Date</span></dt>
+        <dd>
+          <span>{{ trainingHistory.date | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.trainingHistory.description">Description</span></dt>
+        <dd>
+          <span>{{ trainingHistory.description }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.trainingHistory.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="trainingHistory.employee">
+            <a [routerLink]="['/employee', trainingHistory.employee?.id, 'view']">{{ trainingHistory.employee?.employeeBiometricId }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/training-history', trainingHistory.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

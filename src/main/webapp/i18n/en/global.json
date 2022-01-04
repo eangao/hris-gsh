@@ -7,6 +7,20 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
+        "employee": "Employee",
+        "cluster": "Cluster",
+        "department": "Department",
+        "designation": "Designation",
+        "dutySchedule": "Duty Schedule",
+        "dailyTimeRecord": "Daily Time Record",
+        "benefits": "Benefits",
+        "dependents": "Dependents",
+        "education": "Education",
+        "trainingHistory": "Training History",
+        "leave": "Leave",
+        "leaveType": "Leave Type",
+        "holiday": "Holiday",
+        "holidayType": "Holiday Type",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

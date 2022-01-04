@@ -1,0 +1,224 @@
+<div>
+  <h2 id="page-heading" data-cy="EmployeeHeading">
+    <span jhiTranslate="hrisGshApp.employee.home.title">Employees</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="hrisGshApp.employee.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-employee"
+        [routerLink]="['/employee/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="hrisGshApp.employee.home.createLabel"> Create a new Employee </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="employees?.length === 0">
+    <span jhiTranslate="hrisGshApp.employee.home.notFound">No employees found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="employees && employees.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="employeeBiometricId">
+            <span jhiTranslate="hrisGshApp.employee.employeeBiometricId">Employee Biometric Id</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="username">
+            <span jhiTranslate="hrisGshApp.employee.username">Username</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="email"><span jhiTranslate="hrisGshApp.employee.email">Email</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="firstName">
+            <span jhiTranslate="hrisGshApp.employee.firstName">First Name</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="middleName">
+            <span jhiTranslate="hrisGshApp.employee.middleName">Middle Name</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="lastName">
+            <span jhiTranslate="hrisGshApp.employee.lastName">Last Name</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="nameSuffix">
+            <span jhiTranslate="hrisGshApp.employee.nameSuffix">Name Suffix</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="birthdate">
+            <span jhiTranslate="hrisGshApp.employee.birthdate">Birthdate</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="gender">
+            <span jhiTranslate="hrisGshApp.employee.gender">Gender</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="status">
+            <span jhiTranslate="hrisGshApp.employee.status">Status</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="employmentType">
+            <span jhiTranslate="hrisGshApp.employee.employmentType">Employment Type</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="mobileNumber">
+            <span jhiTranslate="hrisGshApp.employee.mobileNumber">Mobile Number</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="dateHired">
+            <span jhiTranslate="hrisGshApp.employee.dateHired">Date Hired</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="dateDeno">
+            <span jhiTranslate="hrisGshApp.employee.dateDeno">Date Deno</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="sickLeaveYearlyCredit">
+            <span jhiTranslate="hrisGshApp.employee.sickLeaveYearlyCredit">Sick Leave Yearly Credit</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="sickLeaveYearlyCreditUsed">
+            <span jhiTranslate="hrisGshApp.employee.sickLeaveYearlyCreditUsed">Sick Leave Yearly Credit Used</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="leaveYearlyCredit">
+            <span jhiTranslate="hrisGshApp.employee.leaveYearlyCredit">Leave Yearly Credit</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="leaveYearlyCreditUsed">
+            <span jhiTranslate="hrisGshApp.employee.leaveYearlyCreditUsed">Leave Yearly Credit Used</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="profileImage">
+            <span jhiTranslate="hrisGshApp.employee.profileImage">Profile Image</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="presentAddressStreet">
+            <span jhiTranslate="hrisGshApp.employee.presentAddressStreet">Present Address Street</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="presentAddressCity">
+            <span jhiTranslate="hrisGshApp.employee.presentAddressCity">Present Address City</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="presentAddressProvince">
+            <span jhiTranslate="hrisGshApp.employee.presentAddressProvince">Present Address Province</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="presentAddressZipcode">
+            <span jhiTranslate="hrisGshApp.employee.presentAddressZipcode">Present Address Zipcode</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="homeAddressStreet">
+            <span jhiTranslate="hrisGshApp.employee.homeAddressStreet">Home Address Street</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="homeAddressCity">
+            <span jhiTranslate="hrisGshApp.employee.homeAddressCity">Home Address City</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="homeAddressProvince">
+            <span jhiTranslate="hrisGshApp.employee.homeAddressProvince">Home Address Province</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="homeAddressZipcode">
+            <span jhiTranslate="hrisGshApp.employee.homeAddressZipcode">Home Address Zipcode</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="user.login">
+            <span jhiTranslate="hrisGshApp.employee.user">User</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="department.name">
+            <span jhiTranslate="hrisGshApp.employee.department">Department</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee of employees; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/employee', employee.id, 'view']">{{ employee.id }}</a>
+          </td>
+          <td>{{ employee.employeeBiometricId }}</td>
+          <td>{{ employee.username }}</td>
+          <td>{{ employee.email }}</td>
+          <td>{{ employee.firstName }}</td>
+          <td>{{ employee.middleName }}</td>
+          <td>{{ employee.lastName }}</td>
+          <td>{{ employee.nameSuffix }}</td>
+          <td>{{ employee.birthdate | formatMediumDate }}</td>
+          <td jhiTranslate="{{ 'hrisGshApp.Gender.' + employee.gender }}">{{ employee.gender }}</td>
+          <td jhiTranslate="{{ 'hrisGshApp.Status.' + employee.status }}">{{ employee.status }}</td>
+          <td jhiTranslate="{{ 'hrisGshApp.EmploymentType.' + employee.employmentType }}">{{ employee.employmentType }}</td>
+          <td>{{ employee.mobileNumber }}</td>
+          <td>{{ employee.dateHired | formatMediumDate }}</td>
+          <td>{{ employee.dateDeno | formatMediumDate }}</td>
+          <td>{{ employee.sickLeaveYearlyCredit }}</td>
+          <td>{{ employee.sickLeaveYearlyCreditUsed }}</td>
+          <td>{{ employee.leaveYearlyCredit }}</td>
+          <td>{{ employee.leaveYearlyCreditUsed }}</td>
+          <td>
+            <a *ngIf="employee.profileImage" (click)="openFile(employee.profileImage, employee.profileImageContentType)">
+              <img
+                [src]="'data:' + employee.profileImageContentType + ';base64,' + employee.profileImage"
+                style="max-height: 30px"
+                alt="employee image"
+              />
+            </a>
+            <span *ngIf="employee.profileImage">{{ employee.profileImageContentType }}, {{ byteSize(employee.profileImage) }}</span>
+          </td>
+          <td>{{ employee.presentAddressStreet }}</td>
+          <td>{{ employee.presentAddressCity }}</td>
+          <td>{{ employee.presentAddressProvince }}</td>
+          <td>{{ employee.presentAddressZipcode }}</td>
+          <td>{{ employee.homeAddressStreet }}</td>
+          <td>{{ employee.homeAddressCity }}</td>
+          <td>{{ employee.homeAddressProvince }}</td>
+          <td>{{ employee.homeAddressZipcode }}</td>
+          <td>
+            {{ employee.user?.login }}
+          </td>
+          <td>
+            <div *ngIf="employee.department">
+              <a [routerLink]="['/department', employee.department?.id, 'view']">{{ employee.department?.name }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/employee', employee.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/employee', employee.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(employee)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="employees && employees.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

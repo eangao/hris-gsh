@@ -1,0 +1,58 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="dailyTimeRecord">
+      <h2 data-cy="dailyTimeRecordDetailsHeading"><span jhiTranslate="hrisGshApp.dailyTimeRecord.detail.title">Daily Time Record</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ dailyTimeRecord.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.dailyTimeRecord.employeeBiometricId">Employee Biometric Id</span></dt>
+        <dd>
+          <span>{{ dailyTimeRecord.employeeBiometricId }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.dailyTimeRecord.inputType">Input Type</span></dt>
+        <dd>
+          <span>{{ dailyTimeRecord.inputType }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.dailyTimeRecord.attendanceType">Attendance Type</span></dt>
+        <dd>
+          <span>{{ dailyTimeRecord.attendanceType }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.dailyTimeRecord.temperature">Temperature</span></dt>
+        <dd>
+          <span>{{ dailyTimeRecord.temperature }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.dailyTimeRecord.logDate">Log Date</span></dt>
+        <dd>
+          <span>{{ dailyTimeRecord.logDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.dailyTimeRecord.logTime">Log Time</span></dt>
+        <dd>
+          <span>{{ dailyTimeRecord.logTime }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.dailyTimeRecord.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="dailyTimeRecord.employee">
+            <a [routerLink]="['/employee', dailyTimeRecord.employee?.id, 'view']">{{ dailyTimeRecord.employee?.employeeBiometricId }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/daily-time-record', dailyTimeRecord.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

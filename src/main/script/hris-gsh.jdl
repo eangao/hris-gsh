@@ -1,0 +1,184 @@
+// ENTITIES:
+//When using the H2 Disk database,
+//all of your data is stored in the target (mvn) or build (gradle) folders.
+//You can remove all data and tables by running ./mvnw clean or ./gradlew clean.
+//The new database tables will be created the next time you start your app.
+
+
+//Email, username and name is duplicate in user and employee
+//add employee email and name should be save in both entity  user and employee
+//update employee email, username and name update also in  user entity
+//user cannot update thier information except password
+//admin(HR_Role) only can edit employee information
+
+// if you manually update entity update also dto
+entity Employee {
+   // Employee primary key is id
+   // employeeBiometricId is the employeeId of employee naming it employeeBiometricId
+   // to avoid error in OneToMany relationship which auto generate employeeId
+	employeeBiometricId Integer unique required
+    username String minlength(5) maxlength(50) unique required
+    email String minlength(5) maxlength(254) unique
+    firstName String  maxlength(50) required
+    middleName String  maxlength(50)
+    lastName String  maxlength(50)required
+    nameSuffix String maxlength(15)
+    birthdate LocalDate required
+    gender Gender required
+    status Status required
+    employmentType EmploymentType required
+    mobileNumber String maxlength(20)
+    dateHired LocalDate
+    dateDeno LocalDate
+    sickLeaveYearlyCredit Integer
+    sickLeaveYearlyCreditUsed Integer
+    leaveYearlyCredit Integer
+    leaveYearlyCreditUsed Integer
+    profileImage ImageBlob
+    presentAddressStreet String
+    presentAddressCity String
+    presentAddressProvince String
+    presentAddressZipcode Integer
+    homeAddressStreet String
+    homeAddressCity String
+    homeAddressProvince String
+    homeAddressZipcode Integer
+}
+
+
+enum Gender{
+	MALE, FEMALE
+}
+
+enum Status{
+	SINGLE, MARRIED, SEPARATED, WIDOW, WIDOWER, COHABITATION
+}
+
+enum EmploymentType {
+	DINOMINATIONAL, INSTITUTIONAL, STATUTORY, CONTRACTUAL, PROBATIONARY, TRAINEE, AGENCY
+}
+
+
+entity Cluster {
+	name String maxlength(100) required
+}
+
+entity Department {
+	name String maxlength(100) required
+}
+
+entity Designation {
+	name String  maxlength(100) unique required
+    description String
+}
+
+entity DutySchedule {
+	dateTimeIn Instant
+    dateTimeOut Instant
+}
+
+entity DailyTimeRecord {
+    employeeBiometricId Long  //this is the id in biometric
+    inputType String  //Fingerprint OR Face
+    attendanceType String //Checkout OR Checkin
+    temperature String
+    logDate String
+    logTime String
+}
+
+entity Benefits {
+	name String  maxlength(200)  maxlength(100) required
+}
+
+entity Dependents {
+	firstName String  maxlength(50) required
+    middleName String  maxlength(50)
+    lastName String  maxlength(50) required
+    relation String  maxlength(50) required
+}
+
+entity Education {
+	bachelorDegree String  maxlength(100) required
+    yearGraduated Integer required
+    school String  maxlength(200) required
+}
+
+entity TrainingHistory {
+	name String  required
+    date LocalDate required
+    description String
+}
+
+entity Leave {
+	dateApply LocalDate
+    dateStart LocalDate
+    dateEnd LocalDate
+    dateReturn LocalDate
+    checkupDate LocalDate
+    convalescingPeriod Integer
+    diagnosis String
+    //physician String
+}
+
+entity LeaveType {
+	name String  maxlength(100) required
+    description String
+}
+
+entity Holiday {
+	name String  maxlength(100) required
+    date LocalDate required
+    description String
+}
+
+entity HolidayType {
+	name String  maxlength(100) required
+}
+
+
+// RELATIONSHIPS:
+relationship OneToOne{
+	Employee{user(login) required} to User
+}
+
+
+relationship OneToMany{
+	Cluster to Department{cluster(name) required}
+    Department to Employee{department(name) required}
+    Employee to DutySchedule{employee(employeeBiometricId) required}
+    Employee to DailyTimeRecord{employee(employeeBiometricId) required}
+    Employee to Dependents{employee(employeeBiometricId) required}
+    Employee to Education{employee(employeeBiometricId) required}
+    Employee to TrainingHistory{employee(employeeBiometricId) required}
+    Employee to Leave{employee(employeeBiometricId) required}
+    LeaveType to Leave{leaveType(name) required}
+}
+
+relationship ManyToMany {
+	 Employee{designation(name) required}  to Designation{employee}
+     Employee{benefits(name) } to Benefits{employee}
+}
+
+
+// SET PAGINATION OPTIONS:
+paginate all with pagination
+// paginate ChatMessage with infinite-scroll
+// paginate all with infinite-scroll
+
+// SET SERVICE OPTIONS:
+service all with serviceImpl
+//service all with serviceClass
+
+// DTO:
+dto all with mapstruct
+
+// FILTERING:
+filter *
+
+
+
+
+
+
+
+

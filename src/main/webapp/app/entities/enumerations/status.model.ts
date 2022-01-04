@@ -1,0 +1,13 @@
+export enum Status {
+  SINGLE = 'SINGLE',
+
+  MARRIED = 'MARRIED',
+
+  SEPARATED = 'SEPARATED',
+
+  WIDOW = 'WIDOW',
+
+  WIDOWER = 'WIDOWER',
+
+  COHABITATION = 'COHABITATION',
+}

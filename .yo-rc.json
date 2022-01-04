@@ -42,7 +42,24 @@
     "clientTheme": "none",
     "clientThemeVariant": "",
     "reactive": false,
-    "enableGradleEnterprise": false
+    "enableGradleEnterprise": false,
+    "entities": [
+      "Employee",
+      "Cluster",
+      "Department",
+      "Designation",
+      "DutySchedule",
+      "DailyTimeRecord",
+      "Benefits",
+      "Dependents",
+      "Education",
+      "TrainingHistory",
+      "Leave",
+      "LeaveType",
+      "Holiday",
+      "HolidayType"
+    ],
+    "lastLiquibaseTimestamp": 1640923776000
   },
   "git-provider": "GitHub",
   "git-company": "eangao",

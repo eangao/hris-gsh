@@ -1,0 +1,60 @@
+{
+  "hrisGshApp": {
+    "employee": {
+      "home": {
+        "title": "Employees",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Employee",
+        "createOrEditLabel": "Create or edit a Employee",
+        "notFound": "No Employees found"
+      },
+      "created": "A new Employee is created with identifier {{ param }}",
+      "updated": "A Employee is updated with identifier {{ param }}",
+      "deleted": "A Employee is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Employee {{ id }}?"
+      },
+      "detail": {
+        "title": "Employee"
+      },
+      "id": "ID",
+      "employeeBiometricId": "Employee Biometric Id",
+      "username": "Username",
+      "email": "Email",
+      "firstName": "First Name",
+      "middleName": "Middle Name",
+      "lastName": "Last Name",
+      "nameSuffix": "Name Suffix",
+      "birthdate": "Birthdate",
+      "gender": "Gender",
+      "status": "Status",
+      "employmentType": "Employment Type",
+      "mobileNumber": "Mobile Number",
+      "dateHired": "Date Hired",
+      "dateDeno": "Date Deno",
+      "sickLeaveYearlyCredit": "Sick Leave Yearly Credit",
+      "sickLeaveYearlyCreditUsed": "Sick Leave Yearly Credit Used",
+      "leaveYearlyCredit": "Leave Yearly Credit",
+      "leaveYearlyCreditUsed": "Leave Yearly Credit Used",
+      "profileImage": "Profile Image",
+      "presentAddressStreet": "Present Address Street",
+      "presentAddressCity": "Present Address City",
+      "presentAddressProvince": "Present Address Province",
+      "presentAddressZipcode": "Present Address Zipcode",
+      "homeAddressStreet": "Home Address Street",
+      "homeAddressCity": "Home Address City",
+      "homeAddressProvince": "Home Address Province",
+      "homeAddressZipcode": "Home Address Zipcode",
+      "user": "User",
+      "dutySchedule": "Duty Schedule",
+      "dailyTimeRecord": "Daily Time Record",
+      "dependents": "Dependents",
+      "education": "Education",
+      "trainingHistory": "Training History",
+      "leave": "Leave",
+      "designation": "Designation",
+      "benefits": "Benefits",
+      "department": "Department"
+    }
+  }
+}

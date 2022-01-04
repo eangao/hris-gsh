@@ -1,0 +1,25 @@
+{
+  "hrisGshApp": {
+    "cluster": {
+      "home": {
+        "title": "Clusters",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Cluster",
+        "createOrEditLabel": "Create or edit a Cluster",
+        "notFound": "No Clusters found"
+      },
+      "created": "A new Cluster is created with identifier {{ param }}",
+      "updated": "A Cluster is updated with identifier {{ param }}",
+      "deleted": "A Cluster is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Cluster {{ id }}?"
+      },
+      "detail": {
+        "title": "Cluster"
+      },
+      "id": "ID",
+      "name": "Name",
+      "department": "Department"
+    }
+  }
+}

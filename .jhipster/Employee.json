@@ -1,0 +1,220 @@
+{
+  "name": "Employee",
+  "fields": [
+    {
+      "fieldName": "employeeBiometricId",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["unique", "required"]
+    },
+    {
+      "fieldName": "username",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength", "unique", "required"],
+      "fieldValidateRulesMinlength": "5",
+      "fieldValidateRulesMaxlength": "50"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength", "unique"],
+      "fieldValidateRulesMinlength": "5",
+      "fieldValidateRulesMaxlength": "254"
+    },
+    {
+      "fieldName": "firstName",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength", "required"],
+      "fieldValidateRulesMaxlength": "50"
+    },
+    {
+      "fieldName": "middleName",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "50"
+    },
+    {
+      "fieldName": "lastName",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength", "required"],
+      "fieldValidateRulesMaxlength": "50"
+    },
+    {
+      "fieldName": "nameSuffix",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "15"
+    },
+    {
+      "fieldName": "birthdate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "gender",
+      "fieldType": "Gender",
+      "fieldValues": "MALE,FEMALE",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "Status",
+      "fieldValues": "SINGLE,MARRIED,SEPARATED,WIDOW,WIDOWER,COHABITATION",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "employmentType",
+      "fieldType": "EmploymentType",
+      "fieldValues": "DINOMINATIONAL,INSTITUTIONAL,STATUTORY,CONTRACTUAL,PROBATIONARY,TRAINEE,AGENCY",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "mobileNumber",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "20"
+    },
+    {
+      "fieldName": "dateHired",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dateDeno",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "sickLeaveYearlyCredit",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "sickLeaveYearlyCreditUsed",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "leaveYearlyCredit",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "leaveYearlyCreditUsed",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "profileImage",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "presentAddressStreet",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "presentAddressCity",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "presentAddressProvince",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "presentAddressZipcode",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "homeAddressStreet",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "homeAddressCity",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "homeAddressProvince",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "homeAddressZipcode",
+      "fieldType": "Integer"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "employee",
+      "relationshipValidateRules": "required",
+      "relationshipName": "user",
+      "otherEntityField": "login",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "dutySchedule",
+      "otherEntityRelationshipName": "employee",
+      "relationshipName": "dutySchedule"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "dailyTimeRecord",
+      "otherEntityRelationshipName": "employee",
+      "relationshipName": "dailyTimeRecord"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "dependents",
+      "otherEntityRelationshipName": "employee",
+      "relationshipName": "dependents"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "education",
+      "otherEntityRelationshipName": "employee",
+      "relationshipName": "education"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "trainingHistory",
+      "otherEntityRelationshipName": "employee",
+      "relationshipName": "trainingHistory"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "leave",
+      "otherEntityRelationshipName": "employee",
+      "relationshipName": "leave"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "designation",
+      "otherEntityRelationshipName": "employee",
+      "relationshipValidateRules": "required",
+      "relationshipName": "designation",
+      "otherEntityField": "name",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "benefits",
+      "otherEntityRelationshipName": "employee",
+      "relationshipName": "benefits",
+      "otherEntityField": "name",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "department",
+      "otherEntityRelationshipName": "employee",
+      "relationshipValidateRules": "required",
+      "relationshipName": "department",
+      "otherEntityField": "name"
+    }
+  ],
+  "entityTableName": "employee",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20211231040923"
+}

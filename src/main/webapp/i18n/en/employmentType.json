@@ -1,0 +1,14 @@
+{
+  "hrisGshApp": {
+    "EmploymentType": {
+      "null": "",
+      "DINOMINATIONAL": "DINOMINATIONAL",
+      "INSTITUTIONAL": "INSTITUTIONAL",
+      "STATUTORY": "STATUTORY",
+      "CONTRACTUAL": "CONTRACTUAL",
+      "PROBATIONARY": "PROBATIONARY",
+      "TRAINEE": "TRAINEE",
+      "AGENCY": "AGENCY"
+    }
+  }
+}
