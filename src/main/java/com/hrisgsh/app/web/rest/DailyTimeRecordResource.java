@@ -1,5 +1,7 @@
 package com.hrisgsh.app.web.rest;
 
+import static org.springframework.http.HttpStatus.OK;
+
 import com.hrisgsh.app.repository.DailyTimeRecordRepository;
 import com.hrisgsh.app.service.DailyTimeRecordQueryService;
 import com.hrisgsh.app.service.DailyTimeRecordService;
@@ -8,11 +10,16 @@ import com.hrisgsh.app.service.dto.DailyTimeRecordDTO;
 import com.hrisgsh.app.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+/////////////////////////////////////////////
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -76,6 +83,91 @@ public class DailyTimeRecordResource {
             .created(new URI("/api/daily-time-records/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
+    }
+
+    @PostMapping("/biometric-punch-log")
+    public ResponseEntity<String> addBiometricPunchLog(@RequestBody String biometricData)
+        throws ParseException, java.text.ParseException, Exception {
+        Logger logger = LoggerFactory.getLogger((this.getClass()));
+
+        //https://stackoverflow.com/questions/36549315/how-to-access-nested-elements-of-json-data-in-java
+        //tutorial
+        //Using the JSON simple library parse the string into a json object
+        JSONParser parse = new JSONParser();
+        JSONObject biometricDataObject = (JSONObject) parse.parse(biometricData);
+        JSONObject realTime = (JSONObject) parse.parse(biometricDataObject.get("RealTime").toString());
+
+        //camsunit api return sent data. if has punchlog or UserUpdated for adding/editing user information.
+        //We will capture only the punchLog data for the meantime
+        //https://camsunit.com/application/biometric-web-api-sample-request-response.html?operation=RealTimePunchLog
+        //status: done to comply to camsunit biometric time attendance
+        if (realTime.get("PunchLog") == null) {
+            return new ResponseEntity<>("done", HttpStatus.OK);
+        }
+
+        JSONObject punchLog = (JSONObject) parse.parse(realTime.get("PunchLog").toString());
+
+        Long employeeId = Long.parseLong(punchLog.get("UserId").toString());
+        String inputType = punchLog.get("InputType").toString();
+
+        String temperature = "";
+        //cams biometric return temperature even without using face.
+        //Use this code while this bug not yet solve
+        if (inputType.equalsIgnoreCase("Face")) {
+            temperature = punchLog.get("Temperature").toString();
+        }
+
+        //NOTE   camsunit jsn sometimes return AttendanceType sometimes return Type
+        String attendanceType = "";
+        if (punchLog.get("AttendanceType") != null) {
+            attendanceType = punchLog.get("AttendanceType").toString();
+        } else if (punchLog.get("Type") != null) {
+            attendanceType = punchLog.get("Type").toString();
+        }
+
+        //Change the value of attendance type
+        //From CheckIn/CheckOut   to   In/Out
+        if (attendanceType.equalsIgnoreCase("CheckOut")) {
+            attendanceType = "Out";
+        } else if (attendanceType.equalsIgnoreCase("CheckIn")) {
+            attendanceType = "In";
+        }
+
+        //Experience challenges in saving time save in the database not same value
+        //Temporarily save date and time as String data type
+        //If solution is found, date and time will be save as Date data type
+        // ============================================================================================ ==========================
+        //https://stackoverflow.com/questions/18915075/java-convert-string-to-timestamp
+        //        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //        // you can change format of date
+        //        Date logTime = dateFormat.parse(punchLog.get("LogTime").toString().substring(0, 19));//
+        //        String dateInString = punchLog.get("LogTime").toString().substring(0, 19);
+        //        Date date = DateUtils.parseDate(dateInString, "yyyy-MM-dd HH:mm:ss");
+        //        logger.info("date {}", date);
+        //        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
+        //        formatter.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+        //        String dateInString = punchLog.get("LogTime").toString().substring(0, 19);
+        //        Date date = formatter.parse(dateInString);
+        //        String formattedDateString = formatter.format(date);
+        //=========================================================================================================================
+
+        String logDate = punchLog.get("LogTime").toString().substring(0, 10);
+        String logTime = punchLog.get("LogTime").toString().substring(11, 19);
+
+        DailyTimeRecordDTO dailyTimeRecordDTO = new DailyTimeRecordDTO();
+
+        dailyTimeRecordDTO.setEmployeeBiometricId(employeeId);
+        dailyTimeRecordDTO.setInputType(inputType);
+        dailyTimeRecordDTO.setAttendanceType(attendanceType);
+        dailyTimeRecordDTO.setTemperature(temperature);
+        dailyTimeRecordDTO.setLogDate(logDate);
+        dailyTimeRecordDTO.setLogTime(logTime);
+
+        dailyTimeRecordService.save(dailyTimeRecordDTO);
+
+        //https://camsunit.com/application/biometric-web-api-sample-request-response.html?operation=RealTimePunchLog
+        //status: done to comply to camsunit biometric time attendance
+        return new ResponseEntity<>("done", HttpStatus.OK);
     }
 
     /**
