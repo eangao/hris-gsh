@@ -27,4 +27,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
         "select employee from Employee employee left join fetch employee.designations left join fetch employee.benefits where employee.id =:id"
     )
     Optional<Employee> findOneWithEagerRelationships(@Param("id") Long id);
+
+    Employee findByEmployeeBiometricId(int employeeBiometricId);
 }
