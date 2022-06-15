@@ -1,0 +1,117 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-daily-time-record-heading"
+        data-cy="DailyTimeRecordCreateUpdateHeading"
+        jhiTranslate="hrisGshApp.dailyTimeRecord.home.createOrEditLabel"
+      >
+        Create or edit a Daily Time Record
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="hrisGshApp.dailyTimeRecord.employeeBiometricId" for="field_employeeBiometricId"
+            >Employee Biometric Id</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="employeeBiometricId"
+            id="field_employeeBiometricId"
+            data-cy="employeeBiometricId"
+            formControlName="employeeBiometricId"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="hrisGshApp.dailyTimeRecord.inputType" for="field_inputType">Input Type</label>
+          <input type="text" class="form-control" name="inputType" id="field_inputType" data-cy="inputType" formControlName="inputType" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="hrisGshApp.dailyTimeRecord.attendanceType" for="field_attendanceType"
+            >Attendance Type</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="attendanceType"
+            id="field_attendanceType"
+            data-cy="attendanceType"
+            formControlName="attendanceType"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="hrisGshApp.dailyTimeRecord.temperature" for="field_temperature"
+            >Temperature</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="temperature"
+            id="field_temperature"
+            data-cy="temperature"
+            formControlName="temperature"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="hrisGshApp.dailyTimeRecord.logDate" for="field_logDate">Log Date</label>
+          <input type="text" class="form-control" name="logDate" id="field_logDate" data-cy="logDate" formControlName="logDate" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="hrisGshApp.dailyTimeRecord.logTime" for="field_logTime">Log Time</label>
+          <input type="text" class="form-control" name="logTime" id="field_logTime" data-cy="logTime" formControlName="logTime" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="hrisGshApp.dailyTimeRecord.employee" for="field_employee">Employee</label>
+          <select class="form-control" id="field_employee" data-cy="employee" name="employee" formControlName="employee">
+            <option *ngIf="!editForm.get('employee')!.value" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="employeeOption.id === editForm.get('employee')!.value?.id ? editForm.get('employee')!.value : employeeOption"
+              *ngFor="let employeeOption of employeesSharedCollection; trackBy: trackEmployeeById"
+            >
+              {{ employeeOption.employeeBiometricId }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['employee'])!.invalid && (editForm.get(['employee'])!.dirty || editForm.get(['employee'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['employee'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

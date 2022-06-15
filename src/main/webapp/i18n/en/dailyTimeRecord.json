@@ -1,0 +1,30 @@
+{
+  "hrisGshApp": {
+    "dailyTimeRecord": {
+      "home": {
+        "title": "Daily Time Records",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Daily Time Record",
+        "createOrEditLabel": "Create or edit a Daily Time Record",
+        "notFound": "No Daily Time Records found"
+      },
+      "created": "A new Daily Time Record is created with identifier {{ param }}",
+      "updated": "A Daily Time Record is updated with identifier {{ param }}",
+      "deleted": "A Daily Time Record is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Daily Time Record {{ id }}?"
+      },
+      "detail": {
+        "title": "Daily Time Record"
+      },
+      "id": "ID",
+      "employeeBiometricId": "Employee Biometric Id",
+      "inputType": "Input Type",
+      "attendanceType": "Attendance Type",
+      "temperature": "Temperature",
+      "logDate": "Log Date",
+      "logTime": "Log Time",
+      "employee": "Employee"
+    }
+  }
+}

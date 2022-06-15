@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="dependents">
+      <h2 data-cy="dependentsDetailsHeading"><span jhiTranslate="hrisGshApp.dependents.detail.title">Dependents</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ dependents.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.dependents.firstName">First Name</span></dt>
+        <dd>
+          <span>{{ dependents.firstName }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.dependents.middleName">Middle Name</span></dt>
+        <dd>
+          <span>{{ dependents.middleName }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.dependents.lastName">Last Name</span></dt>
+        <dd>
+          <span>{{ dependents.lastName }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.dependents.relation">Relation</span></dt>
+        <dd>
+          <span>{{ dependents.relation }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.dependents.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="dependents.employee">
+            <a [routerLink]="['/employee', dependents.employee?.id, 'view']">{{ dependents.employee?.employeeBiometricId }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/dependents', dependents.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

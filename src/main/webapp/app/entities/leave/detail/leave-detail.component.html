@@ -1,0 +1,68 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="leave">
+      <h2 data-cy="leaveDetailsHeading"><span jhiTranslate="hrisGshApp.leave.detail.title">Leave</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ leave.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.leave.dateApply">Date Apply</span></dt>
+        <dd>
+          <span>{{ leave.dateApply | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.leave.dateStart">Date Start</span></dt>
+        <dd>
+          <span>{{ leave.dateStart | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.leave.dateEnd">Date End</span></dt>
+        <dd>
+          <span>{{ leave.dateEnd | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.leave.dateReturn">Date Return</span></dt>
+        <dd>
+          <span>{{ leave.dateReturn | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.leave.checkupDate">Checkup Date</span></dt>
+        <dd>
+          <span>{{ leave.checkupDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.leave.convalescingPeriod">Convalescing Period</span></dt>
+        <dd>
+          <span>{{ leave.convalescingPeriod }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.leave.diagnosis">Diagnosis</span></dt>
+        <dd>
+          <span>{{ leave.diagnosis }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.leave.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="leave.employee">
+            <a [routerLink]="['/employee', leave.employee?.id, 'view']">{{ leave.employee?.employeeBiometricId }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.leave.leaveType">Leave Type</span></dt>
+        <dd>
+          <div *ngIf="leave.leaveType">
+            <a [routerLink]="['/leave-type', leave.leaveType?.id, 'view']">{{ leave.leaveType?.name }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/leave', leave.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+{
+  "hrisGshApp": {
+    "benefits": {
+      "home": {
+        "title": "Benefits",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Benefits",
+        "createOrEditLabel": "Create or edit a Benefits",
+        "notFound": "No Benefits found"
+      },
+      "created": "A new Benefits is created with identifier {{ param }}",
+      "updated": "A Benefits is updated with identifier {{ param }}",
+      "deleted": "A Benefits is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Benefits {{ id }}?"
+      },
+      "detail": {
+        "title": "Benefits"
+      },
+      "id": "ID",
+      "name": "Name",
+      "employee": "Employee"
+    }
+  }
+}

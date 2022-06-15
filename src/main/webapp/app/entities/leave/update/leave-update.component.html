@@ -1,0 +1,200 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-leave-heading" data-cy="LeaveCreateUpdateHeading" jhiTranslate="hrisGshApp.leave.home.createOrEditLabel">
+        Create or edit a Leave
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="hrisGshApp.leave.dateApply" for="field_dateApply">Date Apply</label>
+          <div class="input-group">
+            <input
+              id="field_dateApply"
+              data-cy="dateApply"
+              type="text"
+              class="form-control"
+              name="dateApply"
+              ngbDatepicker
+              #dateApplyDp="ngbDatepicker"
+              formControlName="dateApply"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="dateApplyDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="hrisGshApp.leave.dateStart" for="field_dateStart">Date Start</label>
+          <div class="input-group">
+            <input
+              id="field_dateStart"
+              data-cy="dateStart"
+              type="text"
+              class="form-control"
+              name="dateStart"
+              ngbDatepicker
+              #dateStartDp="ngbDatepicker"
+              formControlName="dateStart"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="dateStartDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="hrisGshApp.leave.dateEnd" for="field_dateEnd">Date End</label>
+          <div class="input-group">
+            <input
+              id="field_dateEnd"
+              data-cy="dateEnd"
+              type="text"
+              class="form-control"
+              name="dateEnd"
+              ngbDatepicker
+              #dateEndDp="ngbDatepicker"
+              formControlName="dateEnd"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="dateEndDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="hrisGshApp.leave.dateReturn" for="field_dateReturn">Date Return</label>
+          <div class="input-group">
+            <input
+              id="field_dateReturn"
+              data-cy="dateReturn"
+              type="text"
+              class="form-control"
+              name="dateReturn"
+              ngbDatepicker
+              #dateReturnDp="ngbDatepicker"
+              formControlName="dateReturn"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="dateReturnDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="hrisGshApp.leave.checkupDate" for="field_checkupDate">Checkup Date</label>
+          <div class="input-group">
+            <input
+              id="field_checkupDate"
+              data-cy="checkupDate"
+              type="text"
+              class="form-control"
+              name="checkupDate"
+              ngbDatepicker
+              #checkupDateDp="ngbDatepicker"
+              formControlName="checkupDate"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="checkupDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="hrisGshApp.leave.convalescingPeriod" for="field_convalescingPeriod"
+            >Convalescing Period</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="convalescingPeriod"
+            id="field_convalescingPeriod"
+            data-cy="convalescingPeriod"
+            formControlName="convalescingPeriod"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="hrisGshApp.leave.diagnosis" for="field_diagnosis">Diagnosis</label>
+          <input type="text" class="form-control" name="diagnosis" id="field_diagnosis" data-cy="diagnosis" formControlName="diagnosis" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="hrisGshApp.leave.employee" for="field_employee">Employee</label>
+          <select class="form-control" id="field_employee" data-cy="employee" name="employee" formControlName="employee">
+            <option *ngIf="!editForm.get('employee')!.value" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="employeeOption.id === editForm.get('employee')!.value?.id ? editForm.get('employee')!.value : employeeOption"
+              *ngFor="let employeeOption of employeesSharedCollection; trackBy: trackEmployeeById"
+            >
+              {{ employeeOption.employeeBiometricId }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['employee'])!.invalid && (editForm.get(['employee'])!.dirty || editForm.get(['employee'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['employee'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="hrisGshApp.leave.leaveType" for="field_leaveType">Leave Type</label>
+          <select class="form-control" id="field_leaveType" data-cy="leaveType" name="leaveType" formControlName="leaveType">
+            <option *ngIf="!editForm.get('leaveType')!.value" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="leaveTypeOption.id === editForm.get('leaveType')!.value?.id ? editForm.get('leaveType')!.value : leaveTypeOption"
+              *ngFor="let leaveTypeOption of leaveTypesSharedCollection; trackBy: trackLeaveTypeById"
+            >
+              {{ leaveTypeOption.name }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['leaveType'])!.invalid && (editForm.get(['leaveType'])!.dirty || editForm.get(['leaveType'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['leaveType'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

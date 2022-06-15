@@ -1,0 +1,28 @@
+{
+  "hrisGshApp": {
+    "dependents": {
+      "home": {
+        "title": "Dependents",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Dependents",
+        "createOrEditLabel": "Create or edit a Dependents",
+        "notFound": "No Dependents found"
+      },
+      "created": "A new Dependents is created with identifier {{ param }}",
+      "updated": "A Dependents is updated with identifier {{ param }}",
+      "deleted": "A Dependents is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Dependents {{ id }}?"
+      },
+      "detail": {
+        "title": "Dependents"
+      },
+      "id": "ID",
+      "firstName": "First Name",
+      "middleName": "Middle Name",
+      "lastName": "Last Name",
+      "relation": "Relation",
+      "employee": "Employee"
+    }
+  }
+}

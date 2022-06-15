@@ -1,0 +1,46 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="education">
+      <h2 data-cy="educationDetailsHeading"><span jhiTranslate="hrisGshApp.education.detail.title">Education</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ education.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.education.bachelorDegree">Bachelor Degree</span></dt>
+        <dd>
+          <span>{{ education.bachelorDegree }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.education.yearGraduated">Year Graduated</span></dt>
+        <dd>
+          <span>{{ education.yearGraduated }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.education.school">School</span></dt>
+        <dd>
+          <span>{{ education.school }}</span>
+        </dd>
+        <dt><span jhiTranslate="hrisGshApp.education.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="education.employee">
+            <a [routerLink]="['/employee', education.employee?.id, 'view']">{{ education.employee?.employeeBiometricId }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/education', education.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
