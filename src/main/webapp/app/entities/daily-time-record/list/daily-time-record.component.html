@@ -1,24 +1,84 @@
 <div>
-  <h2 id="page-heading" data-cy="DailyTimeRecordHeading">
-    <span jhiTranslate="hrisGshApp.dailyTimeRecord.home.title">Daily Time Records</span>
+  <form>
+    <div class="row">
+      <div class="col-sm-6 col-md-3">
+        <div class="form-group form-focus select-focus">
+          <select class="select floating form-control" name="departmentName">
+            <option>departmentName</option>
+          </select>
+          <label class="focus-label">Select Department</label>
+        </div>
+      </div>
 
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="hrisGshApp.dailyTimeRecord.home.refreshListLabel">Refresh List</span>
-      </button>
+      <div class="col-sm-6 col-md-3">
+        <div class="form-group form-focus select-focus">
+          <select class="select floating form-control" name="employmentStatus" required>
+            <option class="focus-option" value="100" selected>ALL</option>
+            <option class="focus-option" value="1">Denominational</option>
+            <option class="focus-option" value="0">Non-Denominational</option>
 
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-daily-time-record"
-        [routerLink]="['/daily-time-record/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="hrisGshApp.dailyTimeRecord.home.createLabel"> Create a new Daily Time Record </span>
-      </button>
+            <!-- <option *ngFor="let empStatus of employmentStatus" [ngValue]="empStatus" value="{{empStatus.id}}">
+                {{empStatus.employmentStatusName}}
+              </option> -->
+          </select>
+          <label class="focus-label">Select Employee Status</label>
+        </div>
+      </div>
+
+      <!--        <div class="col-sm-6 col-md-3">-->
+      <!--          <div class="form-group form-focus">-->
+      <!--            <input  matInput [matDatepicker]="pickerStart" placeholder="Date Start" (dateInput)="biometricStartDateInput($event)"  required>-->
+      <!--            <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>-->
+      <!--            <mat-datepicker  #pickerStart></mat-datepicker>-->
+      <!--            <label class="focus-label">Choose date from</label>-->
+
+      <!--          </div>-->
+      <!--          <div class="form-group form-focus">-->
+      <!--            <input matInput [matDatepicker]="pickerEnd" placeholder="Date End" (dateInput)="biometricEndDateInput($event)"  required>-->
+      <!--            <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>-->
+      <!--            <mat-datepicker  #pickerEnd ></mat-datepicker>-->
+      <!--            <label class="focus-label">Choose date to</label>-->
+      <!--          </div>-->
+      <!--        </div>-->
+
+      <div class="col-sm-6 col-md-3">
+        <button type="submit" class="btn btn-success btn-block">Search</button>
+      </div>
     </div>
-  </h2>
+  </form>
+
+  <!--  <h2 id="page-heading" data-cy="DailyTimeRecordHeading">-->
+  <!--    <span jhiTranslate="hrisGshApp.dailyTimeRecord.home.title">Daily Time Records</span>-->
+
+  <!--    <div class="d-flex justify-content-end">-->
+
+  <!--        <select class="select floating form-control" name="departmentName">-->
+  <!--&lt;!&ndash;          &#45;&#45; [(ngModel)]="selectedDepartment" required (change)="onDepartmentSelected()">&ndash;&gt;-->
+  <!--          <option>-->
+  <!--&lt;!&ndash;            &#45;&#45; *ngFor="let department of departments" [ngValue]="department">&ndash;&gt;-->
+  <!--&lt;!&ndash;            {{department.departmentName}}&ndash;&gt;-->
+  <!--            test-->
+  <!--          </option>-->
+
+  <!--        </select>-->
+
+  <!--      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">-->
+  <!--        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>-->
+  <!--        <span jhiTranslate="hrisGshApp.dailyTimeRecord.home.refreshListLabel">Refresh List</span>-->
+  <!--      </button>-->
+
+  <!--      <button-->
+  <!--        id="jh-create-entity"-->
+  <!--        data-cy="entityCreateButton"-->
+  <!--        class="btn btn-primary jh-create-entity create-daily-time-record"-->
+  <!--        [routerLink]="['/daily-time-record/new']"-->
+  <!--      >-->
+  <!--        <fa-icon icon="plus"></fa-icon>-->
+  <!--        <span jhiTranslate="hrisGshApp.dailyTimeRecord.home.createLabel"> Create a new Daily Time Record </span>-->
+  <!--      </button>-->
+
+  <!--    </div>-->
+  <!--  </h2>-->
 
   <jhi-alert-error></jhi-alert-error>
 

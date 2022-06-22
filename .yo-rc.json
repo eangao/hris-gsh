@@ -59,7 +59,15 @@
       "Holiday",
       "HolidayType"
     ],
-    "lastLiquibaseTimestamp": 1640923776000
+    "aws": {
+      "applicationName": "hristest",
+      "environmentName": "hristest",
+      "bucketName": "hristest",
+      "instanceType": "t2.micro",
+      "awsRegion": "ap-southeast-1",
+      "dbName": "hristest",
+      "dbInstanceClass": "db.t2.micro"
+    }
   },
   "git-provider": "GitHub",
   "git-company": "eangao",

@@ -1,16 +1,16 @@
 package com.hrisgsh.app.web.rest;
 
-import static org.springframework.http.HttpStatus.OK;
-
+import com.hrisgsh.app.domain.Employee;
 import com.hrisgsh.app.repository.DailyTimeRecordRepository;
+import com.hrisgsh.app.repository.EmployeeRepository;
 import com.hrisgsh.app.service.DailyTimeRecordQueryService;
 import com.hrisgsh.app.service.DailyTimeRecordService;
 import com.hrisgsh.app.service.criteria.DailyTimeRecordCriteria;
 import com.hrisgsh.app.service.dto.DailyTimeRecordDTO;
+import com.hrisgsh.app.service.dto.EmployeeDTO;
 import com.hrisgsh.app.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -54,14 +54,19 @@ public class DailyTimeRecordResource {
 
     private final DailyTimeRecordQueryService dailyTimeRecordQueryService;
 
+    //to check employee in biometric
+    private final EmployeeRepository employeeRepository;
+
     public DailyTimeRecordResource(
         DailyTimeRecordService dailyTimeRecordService,
         DailyTimeRecordRepository dailyTimeRecordRepository,
-        DailyTimeRecordQueryService dailyTimeRecordQueryService
+        DailyTimeRecordQueryService dailyTimeRecordQueryService,
+        EmployeeRepository employeeRepository
     ) {
         this.dailyTimeRecordService = dailyTimeRecordService;
         this.dailyTimeRecordRepository = dailyTimeRecordRepository;
         this.dailyTimeRecordQueryService = dailyTimeRecordQueryService;
+        this.employeeRepository = employeeRepository;
     }
 
     /**
@@ -107,7 +112,7 @@ public class DailyTimeRecordResource {
 
         JSONObject punchLog = (JSONObject) parse.parse(realTime.get("PunchLog").toString());
 
-        Long employeeId = Long.parseLong(punchLog.get("UserId").toString());
+        int employeeId = Integer.parseInt(punchLog.get("UserId").toString());
         String inputType = punchLog.get("InputType").toString();
 
         String temperature = "";
@@ -156,18 +161,24 @@ public class DailyTimeRecordResource {
 
         DailyTimeRecordDTO dailyTimeRecordDTO = new DailyTimeRecordDTO();
 
-        dailyTimeRecordDTO.setEmployeeBiometricId(employeeId);
+        dailyTimeRecordDTO.setEmployeeBiometricId((long) employeeId);
         dailyTimeRecordDTO.setInputType(inputType);
         dailyTimeRecordDTO.setAttendanceType(attendanceType);
         dailyTimeRecordDTO.setTemperature(temperature);
         dailyTimeRecordDTO.setLogDate(logDate);
         dailyTimeRecordDTO.setLogTime(logTime);
 
+        //find employee
+        Employee employee = employeeRepository.findByEmployeeBiometricId(employeeId);
+        EmployeeDTO employeeDTO = new EmployeeDTO();
+        employeeDTO.setId(employee.getId());
+        dailyTimeRecordDTO.setEmployee(employeeDTO);
+
         dailyTimeRecordService.save(dailyTimeRecordDTO);
 
         //https://camsunit.com/application/biometric-web-api-sample-request-response.html?operation=RealTimePunchLog
         //status: done to comply to camsunit biometric time attendance
-        return new ResponseEntity<>("done", HttpStatus.OK);
+        return new ResponseEntity<>("DONE", HttpStatus.OK);
     }
 
     /**
